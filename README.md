@@ -2,6 +2,9 @@
 
 **TODO: Add description**
 
+`iex --name a@127.0.0.1 -S mix`
+`iex --name b@127.0.0.1 -S mix`
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
