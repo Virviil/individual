@@ -1,5 +1,6 @@
 defmodule Individual do
   use GenServer
+  require Logger
 
   # Если процесс дохнет - я сам дохну
   # Если процесс выходит - надо самому выходить
@@ -31,8 +32,12 @@ defmodule Individual do
 
   defp start_supervised_module(%{start: {module, function, args}} = son_childspec) do
     case Kernel.apply(module, function, args) do
-      {:ok, pid} -> pid
-      {:error, {:already_started, pid}} -> pid
+      {:ok, pid} ->
+        Logger.debug "Starting module #{module}"
+        pid
+      {:error, {:already_started, pid}} ->
+        Logger.debug "Module #{module} already started. Subscribing..."
+        pid
     end
     |> Process.monitor()
 
@@ -40,16 +45,10 @@ defmodule Individual do
   end
 
   defp convert_child_spec(module) when is_atom(module) do
-    case function_exported?(module, :child_spec, 1) do
-      true -> module.child_spec([]) |> convert_child_spec()
-      false -> raise(ArgumentError, "bad child specification")
-    end
+    module.child_spec([]) |> convert_child_spec()
   end
   defp convert_child_spec({module, arg}) when is_atom(module) do
-    case function_exported?(module, :child_spec, 1) do
-      true -> module.child_spec(arg) |> convert_child_spec()
-      false -> raise(ArgumentError, "bad child specification")
-    end
+    module.child_spec(arg) |> convert_child_spec()
   end
   defp convert_child_spec(spec) when is_map(spec) do
     case Map.get(spec, :type) do

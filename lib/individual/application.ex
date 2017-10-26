@@ -7,7 +7,7 @@ defmodule Individual.Application do
 
   def start(_type, _args) do
     Supervisor.start_link([
-      #{Individual, [Individual.Test]}
+      {Individual, Individual.Test}
     ], strategy: :one_for_one, name: Individual.Supervisor)
   end
 end
