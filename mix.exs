@@ -12,17 +12,12 @@ defmodule Individual.Mixfile do
   end
 
   # Run "mix help compile.app" to learn about applications.
-  def application do
-    [
-      extra_applications: [:logger],
-      mod: {Individual.Application, []}
-    ]
-  end
+  def application, do: []
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:libcluster, "~> 2.1"}
+      {:libcluster, "~> 2.1", only: [:dev, :test]}
     ]
   end
 end

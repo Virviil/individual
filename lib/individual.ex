@@ -18,14 +18,14 @@ defmodule Individual do
   end
 
   def start_link(son_childspec) do
-    GenServer.start_link(__MODULE__, son_childspec)
+    GenServer.start_link(__MODULE__, son_childspec, name: son_childspec.id)
   end
 
   def init(son_childspec) do
     {:ok, start_supervised_module(son_childspec)}
   end
 
-  def handle_info({:DOWN, _, :process, pid, reason}, son_childspec) do
+  def handle_info({:DOWN, _, :process, _pid, reason}, son_childspec) do
     # Managed process exited. We need to die with the same reason.
     {:stop, reason, son_childspec}
   end
