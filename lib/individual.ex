@@ -70,7 +70,7 @@ defmodule Individual do
   """
   @spec start_link(son_childspec :: child_spec) :: GenServer.on_start
   def start_link(son_childspec) do
-    GenServer.start_link(__MODULE__, son_childspec, name: son_childspec.id)
+    GenServer.start_link(__MODULE__, son_childspec, name: :"#Individual<#{son_childspec.id}>")
   end
 
   @doc false
