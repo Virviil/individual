@@ -49,6 +49,12 @@ iex --name a@127.0.0.1 -S mix
 iex --name b@127.0.0.1 -S mix
 ```
 
+## Changelog
+
+### 0.1.1
+
+[ENCHANSMENT] Beautifying `observer`'s output
+
 ## Installation
 
 The package can be installed by adding `individual` to your list of dependencies in `mix.exs`:
