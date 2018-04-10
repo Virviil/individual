@@ -8,7 +8,7 @@ defmodule Individual.Application do
   def start(_type, _args) do
     Supervisor.start_link([
       {Individual, Supervisor.child_spec({Individual.Test, []}, id: Test1)},
-      {Individual, Supervisor.child_spec({Individual.Test, []}, id: Test2)}
+      # {Individual, Supervisor.child_spec({Individual.Test, []}, id: Test2)}
     ], strategy: :one_for_one, name: Individual.Supervisor)
   end
 end

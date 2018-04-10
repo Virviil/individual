@@ -48,13 +48,14 @@ defmodule Individual do
   @doc false
   @spec child_spec(child_spec :: child_spec) :: :supervisor.child_spec()
   def child_spec(child_spec) do
-    son_childspec = child_spec |> convert_child_spec()
+    son_child_spec = child_spec |> convert_child_spec()
 
     Map.merge(
-      son_childspec,
+      son_child_spec,
       %{
         type: :supervisor,
-        start: {__MODULE__, :start_link, [son_childspec]}
+        shutdown: :infinity,
+        start: {__MODULE__, :start_link, [son_child_spec]}
       }
     )
   end
@@ -90,10 +91,11 @@ defmodule Individual do
     {:stop, reason, son_childspec}
   end
 
-  defp start_supervised_module(%{start: {module, function, args}} = son_childspec) do
-    case Kernel.apply(module, function, args) do
+  defp start_supervised_module(%{start: {module, function, args}, id: id} = son_childspec) do
+    case Kernel.apply(module, function, Keyword.put(args, :name, {:global, :"#{module}<#{id}>"})) do
       {:ok, pid} ->
         Logger.debug "Starting module #{module}"
+        Process.register(pid, :"#{module}<#{id}>")
         pid
       {:error, {:already_started, pid}} ->
         Logger.debug "Module #{module} already started. Subscribing..."

@@ -17,7 +17,9 @@ defmodule Individual.Mixfile do
   end
 
   # Run "mix help compile.app" to learn about applications.
-  def application, do: []
+  def application, do: [
+    mod: {Individual.Application, []},
+  ]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
@@ -35,7 +37,7 @@ defmodule Individual.Mixfile do
     [
       # These are the default files included in the package
       files: ["lib", "mix.exs", "README*"],
-      maintainers: ["Dmitry Rubinten"],
+      maintainers: ["Dmitry Rubinsten"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/virviil/individual"}
     ]
