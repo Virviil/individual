@@ -51,6 +51,11 @@ iex --name b@127.0.0.1 -S mix
 
 ## Changelog
 
+### 0.2.1
+
+[ENCHANSMENT] Adding `Individual.Wrapper` module, that allowes to control GenServer,
+that don't register themselves in `:global` scope.
+
 ### 0.1.1
 
 [ENCHANSMENT] Beautifying `observer`'s output
@@ -62,7 +67,7 @@ The package can be installed by adding `individual` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:individual, "~> 0.1.0"}
+    {:individual, "~> 0.2"}
   ]
 end
 ```

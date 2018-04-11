@@ -4,7 +4,7 @@ defmodule Individual.Mixfile do
   def project do
     [
       app: :individual,
-      version: "0.1.1",
+      version: "0.2.1",
       elixir: "~> 1.5",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -22,7 +22,7 @@ defmodule Individual.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:libcluster, "~> 2.1", only: [:dev, :test]},
+      {:libcluster, "~> 2.3", only: [:dev, :test]},
       {:ex_doc, "~> 0.0", only: :dev},
     ]
   end

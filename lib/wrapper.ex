@@ -1,14 +1,26 @@
 defmodule Individual.Wrapper do
   @moduledoc """
-  This GenServer wraps underlying module.
+  This module wraps underlying workers, that can not be registered in `:global` scope.
 
-  ## The problem
+  ### The problem
 
-  Worker can not register it's name by default, so we need wrapper that would
-  register inside global module for that purposes
+  Worker can not register it's name by default, so we need wrapper, that would be
+  registered inside global module for that purposes.
+
+  ### Solution
+
+  So, `Individual` will monitor `Individual.Wrapper`, which will be unique across cluster.
+  Wrapper will monitor underlying module. If `Individual.Wrapper` will not be able to start
+  because of name conflict, underlying module will even not try to start.
+
+  When one of the cluster nodes will fall, `Individual` modules on all other
+  nodes will try to start there own `Individual.Wrapper`'s. The first one, that will be started -
+  will continue to work, and will start underlying module. All other will fail because
+  of name conflicts.
   """
   require Logger
 
+  @doc false
   def child_spec(son_child_spec) do
     Map.merge(son_child_spec, %{
       # We need to specify this worker as a supervisor to prevent timeout crashes
@@ -19,6 +31,9 @@ defmodule Individual.Wrapper do
     })
   end
 
+  @doc """
+  This function will be called by `Individual` module. No need to call it manually
+  """
   def start_link(son_child_spec) do
     case GenServer.start_link(
            __MODULE__,
@@ -34,6 +49,7 @@ defmodule Individual.Wrapper do
     end
   end
 
+  @doc false
   def init(son_child_spec) do
     # We are trying to register the wrapper with given name first. If the name
     # is taken, the worker's initialization process should not be started.
@@ -42,16 +58,16 @@ defmodule Individual.Wrapper do
     {:ok, son_child_spec}
   end
 
+  @doc false
   def handle_info(:init, son_child_spec) do
     {:ok, son_child_spec} = start_worker(son_child_spec)
     {:noreply, son_child_spec}
   end
 
-  @doc """
-  This function tries to start a worker.
-  If everything goes ok, this module starts to be supervised by wrapper.
-  """
+  @doc false
   def start_worker(%{start: {module, function, args}, id: id} = son_child_spec) do
+    # This function tries to start a worker.
+    # If everything goes ok, this module starts to be supervised by wrapper.
     case Kernel.apply(module, function, args) do
       {:ok, pid} when is_pid(pid) ->
         Logger.debug("Starting worker #{son_child_spec.id}")
