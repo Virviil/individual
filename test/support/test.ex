@@ -2,7 +2,7 @@ defmodule Individual.Test do
   use GenServer
 
   def start_link(arg) do
-    GenServer.start_link(__MODULE__, arg, name: {:global, :test})
+    GenServer.start_link(__MODULE__, arg)
   end
 
   def ping() do

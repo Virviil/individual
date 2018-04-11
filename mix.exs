@@ -37,7 +37,7 @@ defmodule Individual.Mixfile do
     [
       # These are the default files included in the package
       files: ["lib", "mix.exs", "README*"],
-      maintainers: ["Dmitry Rubinsten"],
+      maintainers: ["Dmitry Rubinstein"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/virviil/individual"}
     ]

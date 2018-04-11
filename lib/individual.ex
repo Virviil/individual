@@ -76,7 +76,7 @@ defmodule Individual do
 
   @doc false
   def init(son_childspec) do
-    {:ok, start_supervised_module(son_childspec)}
+    {:ok, start_wrapper(son_childspec)}
   end
 
   ### DEATH
@@ -91,19 +91,18 @@ defmodule Individual do
     {:stop, reason, son_childspec}
   end
 
-  defp start_supervised_module(%{start: {module, function, args}, id: id} = son_childspec) do
-    case Kernel.apply(module, function, Keyword.put(args, :name, {:global, :"#{module}<#{id}>"})) do
+  defp start_wrapper(%{id: id} = worker_child_spec) do
+    case Individual.Wrapper.start_link(worker_child_spec) do
       {:ok, pid} ->
-        Logger.debug "Starting module #{module}"
-        Process.register(pid, :"#{module}<#{id}>")
+        Logger.debug("Starting wrapper for worker #{id}")
         pid
       {:error, {:already_started, pid}} ->
-        Logger.debug "Module #{module} already started. Subscribing..."
+        Logger.debug "Worker #{id} already started. Subscribing..."
         pid
     end
     |> Process.monitor()
 
-    son_childspec
+    worker_child_spec
   end
 
   defp convert_child_spec(module) when is_atom(module) do

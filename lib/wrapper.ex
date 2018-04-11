@@ -7,6 +7,8 @@ defmodule Individual.Wrapper do
   Worker can not register it's name by default, so we need wrapper that would
   register inside global module for that purposes
   """
+  require Logger
+
   def child_spec(son_child_spec) do
     Map.merge(son_child_spec, %{
       # We need to specify this worker as a supervisor to prevent timeout crashes
@@ -21,10 +23,10 @@ defmodule Individual.Wrapper do
     case GenServer.start_link(
            __MODULE__,
            son_child_spec,
-           name: {:global, :"#Individual.Wrapper<son_child_spec.id>"}
+           name: {:global, :"#Individual.Wrapper<#{son_child_spec.id}>"}
          ) do
       {:ok, pid} ->
-        Process.register(pid, :"#Individual.Wrapper<son_child_spec.id>")
+        Process.register(pid, :"#Individual.Wrapper<#{son_child_spec.id}>")
         {:ok, pid}
 
       error ->
@@ -52,6 +54,7 @@ defmodule Individual.Wrapper do
   def start_worker(%{start: {module, function, args}, id: id} = son_child_spec) do
     case Kernel.apply(module, function, args) do
       {:ok, pid} when is_pid(pid) ->
+        Logger.debug("Starting worker #{son_child_spec.id}")
         Process.link(pid)
         {:ok, son_child_spec}
 
