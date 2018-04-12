@@ -53,12 +53,12 @@ iex --name b@127.0.0.1 -S mix
 
 ### 0.2.1
 
-[ENCHANSMENT] Adding `Individual.Wrapper` module, that allowes to control GenServer,
+[ENHANCEMENT] Adding `Individual.Wrapper` module, that allowes to control GenServer,
 that don't register themselves in `:global` scope.
 
 ### 0.1.1
 
-[ENCHANSMENT] Beautifying `observer`'s output
+[ENHANCEMENT] Beautifying `observer`'s output
 
 ## Installation
 
