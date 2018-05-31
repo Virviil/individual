@@ -38,16 +38,18 @@ defmodule Individual.Wrapper do
     case GenServer.start_link(
            __MODULE__,
            son_child_spec,
-           name: {:global, :"#Individual.Wrapper<#{son_child_spec.id}>"}
+           name: {:global, process_name(son_child_spec.id)}
          ) do
       {:ok, pid} ->
-        Process.register(pid, :"#Individual.Wrapper<#{son_child_spec.id}>")
+        Process.register(pid, process_name(son_child_spec.id))
         {:ok, pid}
 
       error ->
         error
     end
   end
+
+  def process_name(process_id), do: String.to_atom("#Individual.Wrapper<#{process_id}>")
 
   @doc false
   def init(son_child_spec) do
