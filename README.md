@@ -5,7 +5,7 @@ Process adapter to handle singleton processes in Elixir applications.
 ## The problem
 
 Sometimes, when you start your program on cluster with *MASTER<->MASTER* strategy,
-some of your modules should be started only on one node at a time. This is common patter, which is called **CLUSTER SINGLETON**.
+some of your modules should be started only on one node at a time. This is common pattern, which is called **CLUSTER SINGLETON**.
 These modules can be thus be registered within `:global` module, but `:global` doesn't handle name conflicts and restarts.
 
 ## Solution
@@ -27,7 +27,7 @@ you should resolve them by yourself.
 ## Usage
 
 Wrap your worker or supervisor specification inside any of your supervisors with
-`Individual` call, passing supervisor specification as argument for `Individual`.
+`Individual` call, passing supervisor specification as an argument for `Individual`.
 
 Your worker or supervisor can register itself with some name or not - `Individual` will take care about registering it in a global scope.
 
@@ -70,7 +70,7 @@ iex --name b@127.0.0.1 -S mix
 ### 0.2.1
 
 #### **ENHANCEMENTS**
-*  Adding `Individual.Wrapper` module, that allowes to control GenServer, that don't register themselves in `:global` scope.
+*  Adding `Individual.Wrapper` module, that allows to control GenServer, that don't register themselves in `:global` scope.
 
 ### 0.1.1
 
