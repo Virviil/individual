@@ -4,7 +4,7 @@ defmodule Individual.Mixfile do
   def project do
     [
       app: :individual,
-      version: "0.2.1",
+      version: "0.3.1",
       elixir: "~> 1.5",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
