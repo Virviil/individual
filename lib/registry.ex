@@ -31,7 +31,7 @@ defmodule Individual.Registry do
   defp resolve_with_times(_, _), do: elem({:left, :right}, :rand.uniform(2) - 1)
 
   defp commit_resolution(name, pid_to_stay, pid_to_kill) do
-    Logger.debug("Individual: Name conflict for name #{name}! Terminating #{pid_to_kill}")
+    Logger.debug("Individual: Name conflict for name #{inspect name}! Terminating #{inspect pid_to_kill}")
     :erlang.exit(pid_to_kill, :kill)
     pid_to_stay
   end
