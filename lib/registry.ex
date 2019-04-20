@@ -7,16 +7,21 @@ defmodule Individual.Registry do
   @throttle_time 5_000_000_000
 
 
+  @doc false
   def register_name(name, pid) do
     :global.register_name(name, pid, &conflict_resolver/3)
   end
 
+  @doc false
   def re_register_name(name, pid) do
     :global.re_register_name(name, pid, &conflict_resolver/3)
   end
 
+  @doc false
   defdelegate unregister_name(name), to: :global
+  @doc false
   defdelegate whereis_name(name), to: :global
+  @doc false
   defdelegate send(pid, message), to: :global
 
   defp conflict_resolver(name, pid_l, pid_r) do

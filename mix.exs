@@ -6,12 +6,13 @@ defmodule Individual.Mixfile do
       app: :individual,
       version: "0.3.1",
       elixir: "~> 1.5",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps(),
       name: "Individual",
+      docs: docs(),
       source_url: "https://github.com/virviil/individual"
     ]
   end
@@ -23,12 +24,21 @@ defmodule Individual.Mixfile do
   defp deps do
     [
       {:libcluster, "~> 2.3", only: [:dev, :test]},
-      {:ex_doc, "~> 0.0", only: :dev},
+      {:ex_doc, "~> 0.0", only: :dev}
     ]
   end
 
   defp description() do
     "Process adapter to handle singleton processes in Elixir applications."
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: [
+        "README.md"
+      ]
+    ]
   end
 
   defp package() do
