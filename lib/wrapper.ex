@@ -42,7 +42,7 @@ defmodule Individual.Wrapper do
     case GenServer.start_link(
            __MODULE__,
            son_child_spec,
-           name: {:global, :"#Individual.Wrapper<#{son_child_spec.id}>"}
+           name: {:via, Individual.Registry, :"#Individual.Wrapper<#{son_child_spec.id}>"}
          ) do
       {:ok, pid} ->
         Process.register(pid, :"#Individual.Wrapper<#{son_child_spec.id}>")
