@@ -4,10 +4,16 @@ defmodule Individual.Registry do
   @moduledoc """
   This registry is a build-up upon global registry. We'll use it for better conflicts resolution.
   """
-  def register_name(name, pid) do
-    :global.register_name(name, pid, &conflict_resolver/3)
-  end
+  # def register_name(name, pid) do
+  #   :global.register_name(name, pid, &conflict_resolver/3)
+  # end
 
+  # def re_register_name(name, pid)
+  #   :global.re_register_name(name, pid, &conflict_resolver/3)
+  # end
+
+  defdelegate register_name(name, pid) to: :global
+  defdelegate re_register_name(name, pid) to: :global
   defdelegate unregister_name(name), to: :global
   defdelegate whereis_name(name), to: :global
   defdelegate send(pid, message), to: :global
