@@ -12,8 +12,8 @@ defmodule Individual.Registry do
   #   :global.re_register_name(name, pid, &conflict_resolver/3)
   # end
 
-  defdelegate register_name(name, pid) to: :global
-  defdelegate re_register_name(name, pid) to: :global
+  defdelegate register_name(name, pid), to: :global
+  defdelegate re_register_name(name, pid), to: :global
   defdelegate unregister_name(name), to: :global
   defdelegate whereis_name(name), to: :global
   defdelegate send(pid, message), to: :global
