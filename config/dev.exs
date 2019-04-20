@@ -9,10 +9,10 @@ config :libcluster,
       config: [hosts: [:"a@127.0.0.1", :"b@127.0.0.1"]],
       # The function to use for connecting nodes. The node
       # name will be appended to the argument list. Optional
-      connect: {:net_kernel, :connect, []},
+      connect: {:net_kernel, :connect_node, []},
       # The function to use for disconnecting nodes. The node
       # name will be appended to the argument list. Optional
-      disconnect: {:net_kernel, :disconnect, []},
+      disconnect: {:net_kernel, :disconnect_node, []},
       # The function to use for listing nodes.
       # This function must return a list of node names. Optional
       list_nodes: {:erlang, :nodes, [:connected]},

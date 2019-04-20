@@ -31,6 +31,10 @@ defmodule Individual.Wrapper do
     })
   end
 
+  def time_alive(pid) do
+    GenServer.call(pid, :time_alive)
+  end
+
   @doc """
   This function will be called by `Individual` module. No need to call it manually
   """
@@ -38,7 +42,7 @@ defmodule Individual.Wrapper do
     case GenServer.start_link(
            __MODULE__,
            son_child_spec,
-           name: {:global, :"#Individual.Wrapper<#{son_child_spec.id}>"}
+           name: {:via, Individual.Registry, :"#Individual.Wrapper<#{son_child_spec.id}>"}
          ) do
       {:ok, pid} ->
         Process.register(pid, :"#Individual.Wrapper<#{son_child_spec.id}>")
@@ -60,8 +64,13 @@ defmodule Individual.Wrapper do
 
   @doc false
   def handle_info(:init, son_child_spec) do
+    Process.put(Individual.Wrapper.StartTime, :erlang.system_time())
     {:ok, son_child_spec} = start_worker(son_child_spec)
     {:noreply, son_child_spec}
+  end
+
+  def handle_call(:time_alive, _from, state) do
+    {:reply, :erlang.system_time() - Process.get(Individual.Wrapper.StartTime, 0), state}
   end
 
   @doc false
@@ -70,7 +79,7 @@ defmodule Individual.Wrapper do
     # If everything goes ok, this module starts to be supervised by wrapper.
     case Kernel.apply(module, function, args) do
       {:ok, pid} when is_pid(pid) ->
-        Logger.debug("Starting worker #{son_child_spec.id}")
+        Logger.debug("Individual: Starting worker #{son_child_spec.id}")
         Process.link(pid)
         {:ok, son_child_spec}
 

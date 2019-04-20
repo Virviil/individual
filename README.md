@@ -14,6 +14,16 @@ These modules can be thus be registered within `:global` module, but `:global` d
 It will ensure, that **ONLY** one defined module at a time is working on a cluster,
 and also will restart the process on another node in node with working process will fail.
 
+## Default name conflicts resolution
+
+If the cluster is starting in the same time, `Individual` will give time gape of 5 seconds. Within it, 
+every node has the same probability to become a leader.
+
+After 5 seconds gap, *oldest* node will always be a leader.
+
+This solution should prevent the situation, when node that is added to the cluster can kill already working processes to restart the
+by nodeself.
+
 ## Split Brain Resolution
 
 Since **Individual** uses `:global` module, there is a common problem with [cluster splits](https://en.wikipedia.org/wiki/Network_partition).
@@ -67,6 +77,11 @@ iex --name b@127.0.0.1 -S mix
 
 ## Changelog
 
+### 0.3.1
+
+#### **ENHANCEMENTS**
+*  Adding `Individual.Registry`, that proxies `:global` module calls. It will prevent process recreation if the node was just added to working cluster.
+
 ### 0.2.1
 
 #### **ENHANCEMENTS**
@@ -84,7 +99,7 @@ The package can be installed by adding `individual` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:individual, "~> 0.2"}
+    {:individual, "~> 0.3"}
   ]
 end
 ```
