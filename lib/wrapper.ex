@@ -31,6 +31,10 @@ defmodule Individual.Wrapper do
     })
   end
 
+  def time_alive(pid) do
+    GenServer.call(pid, :time_alive)
+  end
+
   @doc """
   This function will be called by `Individual` module. No need to call it manually
   """
@@ -60,8 +64,13 @@ defmodule Individual.Wrapper do
 
   @doc false
   def handle_info(:init, son_child_spec) do
+    Process.put(Individual.Wrapper.StartTime, :erlang.system_time())
     {:ok, son_child_spec} = start_worker(son_child_spec)
     {:noreply, son_child_spec}
+  end
+
+  def handle_call(:time_alive, _from, state) do
+    {:reply, :erlang.system_time() - Process.get(Individual.Wrapper.StartTime, 0), state}
   end
 
   @doc false
