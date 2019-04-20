@@ -94,10 +94,10 @@ defmodule Individual do
   defp start_wrapper(%{id: id} = worker_child_spec) do
     case Individual.Wrapper.start_link(worker_child_spec) do
       {:ok, pid} ->
-        Logger.debug("Starting wrapper for worker #{id}")
+        Logger.debug("Individual: Starting wrapper for worker #{id}")
         pid
       {:error, {:already_started, pid}} ->
-        Logger.debug "Worker #{id} already started. Subscribing..."
+        Logger.debug "Individual: Worker #{id} already started. Subscribing..."
         pid
     end
     |> Process.monitor()

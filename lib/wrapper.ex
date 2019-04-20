@@ -79,7 +79,7 @@ defmodule Individual.Wrapper do
     # If everything goes ok, this module starts to be supervised by wrapper.
     case Kernel.apply(module, function, args) do
       {:ok, pid} when is_pid(pid) ->
-        Logger.debug("Starting worker #{son_child_spec.id}")
+        Logger.debug("Individual: Starting worker #{son_child_spec.id}")
         Process.link(pid)
         {:ok, son_child_spec}
 
