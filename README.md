@@ -77,6 +77,10 @@ iex --name b@127.0.0.1 -S mix
 
 ## Changelog
 
+### 0.3.2
+* Fixing bug with strategies
+* Fixing bug with `pid` logging
+
 ### 0.3.1
 
 #### **ENHANCEMENTS**

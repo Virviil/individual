@@ -31,8 +31,8 @@ defmodule Individual.Registry do
     end
   end
 
-  defp reslove_with_times(tl_l, tl_r) when tl_l - tl_r > @throttle_time, do: :left
-  defp reslove_with_times(tl_l, tl_r) when tl_l - tl_r > -@throttle_time, do: :right
+  defp resolve_with_times(tl_l, tl_r) when tl_l - tl_r > @throttle_time, do: :left
+  defp resolve_with_times(tl_l, tl_r) when tl_l - tl_r > -@throttle_time, do: :right
   defp resolve_with_times(_, _), do: elem({:left, :right}, :rand.uniform(2) - 1)
 
   defp commit_resolution(name, pid_to_stay, pid_to_kill) do
