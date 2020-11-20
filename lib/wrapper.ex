@@ -86,7 +86,7 @@ defmodule Individual.Wrapper do
       {:error, {:already_started, pid}} ->
         raise RuntimeError,
               "Individual's supervised module #{id} try to take the name, that is already registered in current node's scope for process #{
-                pid
+                inspect pid
               }. Please, check your worker's starting functions - may be it's naming is in conflict with other names!"
 
       _err ->
