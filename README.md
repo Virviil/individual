@@ -1,5 +1,11 @@
 # Individual
 
+[![Module Version](https://img.shields.io/hexpm/v/individual.svg)](https://hex.pm/packages/individual)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/individual/)
+[![Total Download](https://img.shields.io/hexpm/dt/individual.svg)](https://hex.pm/packages/individual)
+[![License](https://img.shields.io/hexpm/l/individual.svg)](https://github.com/virviil/individual/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/virviil/individual.svg)](https://github.com/virviil/individual/commits/master)
+
 Process adapter to handle singleton processes in Elixir applications.
 
 ## The problem
@@ -16,7 +22,7 @@ and also will restart the process on another node in node with working process w
 
 ## Default name conflicts resolution
 
-If the cluster is starting in the same time, `Individual` will give time gape of 5 seconds. Within it, 
+If the cluster is starting in the same time, `Individual` will give time gape of 5 seconds. Within it,
 every node has the same probability to become a leader.
 
 After 5 seconds gap, *oldest* node will always be a leader.
@@ -98,7 +104,7 @@ iex --name b@127.0.0.1 -S mix
 
 ## Installation
 
-The package can be installed by adding `individual` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:individual` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -107,3 +113,10 @@ def deps do
   ]
 end
 ```
+
+## Copyright and License
+
+Copyright (c) 2017 Dmitry Rubinstein
+
+This work is free. You can redistribute it and/or modify it under the
+terms of the MIT License. See the [LICENSE.md](./LICENSE.md) file for more details.
