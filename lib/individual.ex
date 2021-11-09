@@ -81,7 +81,7 @@ defmodule Individual do
 
   ### DEATH
 
-  # If the process is dieing - `Individual` dies also.
+  # If the process is dying - `Individual` dies also.
   # If the process is exiting - `Individual` is forced to exit.
   # Everything depends on supervision and workers strategies.
 

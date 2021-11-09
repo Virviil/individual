@@ -1,26 +1,25 @@
 defmodule Individual.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/virviil/individual"
+  @version "0.3.2"
+
   def project do
     [
       app: :individual,
-      version: "0.3.2",
+      version: @version,
       elixir: "~> 1.5",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      description: description(),
       package: package(),
       deps: deps(),
       name: "Individual",
-      docs: docs(),
-      source_url: "https://github.com/virviil/individual"
+      docs: docs()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application, do: []
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:libcluster, "~> 2.3", only: [:dev, :test]},
@@ -28,26 +27,26 @@ defmodule Individual.Mixfile do
     ]
   end
 
-  defp description() do
-    "Process adapter to handle singleton processes in Elixir applications."
-  end
-
   defp docs do
     [
-      main: "readme",
       extras: [
-        "README.md"
-      ]
+        "LICENSE.md": [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
 
   defp package() do
     [
-      # These are the default files included in the package
+      description: "Process adapter to handle singleton processes in Elixir applications.",
       files: ["lib", "mix.exs", "README*"],
       maintainers: ["Dmitry Rubinstein"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/virviil/individual"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 end
